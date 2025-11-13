@@ -1,0 +1,63 @@
+services:
+  thon-db:
+    image: postgres:18.0
+    container_name: postgres
+    environment:
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+
+  thon-backend:
+    build:
+      context: ./backend        # Контекст сборки
+      dockerfile: Thon.Web/Dockerfile  # Путь к Dockerfile относительно context
+    container_name: backend
+    restart: unless-stopped
+    depends_on:
+      - thon-db
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_CONNECTION_STRING: "Server=thon-db;Port=5432;Database=${POSTGRES_DB};User Id=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
+      INIT_ADMIN_LOGIN: $INIT_ADMIN_LOGIN
+      INIT_ADMIN_PASSWORD: $INIT_ADMIN_PASSWORD
+      HASH_SALT_1: $HASH_SALT_1
+      HASH_SALT_2: $HASH_SALT_2
+
+  thon-frontend-admin:
+    build: ./frontend-admin
+    container_name: frontend-admin
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - thon-backend
+
+  thon-frontend-institution:
+    build: ./frontend-institution
+    container_name: frontend-institution
+    restart: unless-stopped
+    ports:
+      - "3000:3030"
+    depends_on:
+      - thon-backend
+
+  thon-bot-max:
+    build: ./bot
+    container_name: bot-max
+    depends_on:
+      - thon-backend
+    environment:
+      API_TOKEN: $API_TOKEN
+      BOT_TOKEN: $BOT_TOKEN
+      OPENROUTER_TOKEN: $OPENROUTER_TOKEN
+
+volumes:
+  pgdata:
+    driver: local
+

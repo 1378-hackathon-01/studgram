@@ -1,0 +1,12 @@
+[submodule "bot"]
+	path = bot
+	url = git@github.com:1378-hackathon-01/bot.git
+[submodule "backend"]
+	path = backend
+	url = git@github.com:1378-hackathon-01/backend.git
+[submodule "frontend-admin"]
+	path = frontend-admin
+	url = git@github.com:1378-hackathon-01/frontend-admin.git
+[submodule "frontend-institution"]
+	path = frontend-institution
+	url = git@github.com:1378-hackathon-01/frontend-institution.git
