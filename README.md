@@ -1,8 +1,13 @@
 # StudGram
+StudGram — образовательная платформа на базе чат-бота в мессенджере MAX и веб-приложения, где студенты управляют расписанием, заданиями и коммуникацией в одном месте.
 
-Микросервисная система для управления студенческими данными с поддержкой интеграции через мессенджеры.
+Сервис развернут в мессенджере MAX (для студентов): https://max.ru/t589_hakaton_bot
+Веб-приложение для администратора системы: https://admin.studgram.ru/ (логин `admin`, пароль `admin`)
+Веб-приложение для администрации ВУЗа и старост: https://cp.studgram.ru/
 
 ## Архитектура
+Микросервисная система для управления студенческими данными с поддержкой интеграции через мессенджеры.
+
 
 ![architecture.jpg](images/architecture.jpg)
 
@@ -80,13 +85,13 @@
 ### 5. thon-bot-max (Messenger Bot)
 **Базовый образ:** Custom (Python 3.13)
 
-**Описание:** Асинхронный бот для взаимодействия со студентами через мессенджеры (MAX, Telegram, VK). Регистрация студентов, выбор учебного заведения, календарь событий.
+**Описание:** Асинхронный бот для взаимодействия со студентами через мессенджер MAX. Регистрация студентов, выбор учебного заведения, календарь событий.
 
 **Зависимости:** Backend API (`thon-backend`)
 
 **Переменные окружения:**
 - `API_TOKEN` - токен для доступа к Backend API
-- `BOT_TOKEN` - токен от мессенджера (MAX/Telegram)
+- `BOT_TOKEN` - токен от мессенджера MAX
 - `OPENROUTER_TOKEN` - токен для AI функций (опционально)
 
 **Dockerfile:** `./bot/Dockerfile`
@@ -151,7 +156,7 @@ HASH_SALT_1=random_string_32_characters_min
 HASH_SALT_2=another_random_string_32_chars
 
 ## Bot
-API_TOKEN=will_be_generated_after_backend_start
+API_TOKEN=will_be_generated_at_backend_start
 BOT_TOKEN=your_messenger_bot_token
 OPENROUTER_TOKEN=your_openrouter_token_optional
 ```
