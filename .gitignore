@@ -1,5 +1,6 @@
 .idea/
 .claude/
+frontend-api-client/
 
 .env
 CLAUDE.md
