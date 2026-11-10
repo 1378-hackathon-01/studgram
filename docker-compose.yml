@@ -30,26 +30,28 @@ services:
       HASH_SALT_2: $HASH_SALT_2
 
   thon-frontend-admin:
-    build: ./frontend-admin
+    build:
+      context: ./frontend-admin
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-}
     container_name: frontend-admin
     restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
       - thon-backend
-    environment:
-      REACT_APP_API_URL: http://localhost:5222
 
   thon-frontend-institution:
-    build: ./frontend-institution
+    build:
+      context: ./frontend-institution
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-}
     container_name: frontend-institution
     restart: unless-stopped
     ports:
       - "3030:3000"
     depends_on:
       - thon-backend
-    environment:
-      NODE_ENV: development
 
   thon-bot-max:
     build: ./bot
@@ -60,7 +62,7 @@ services:
       API_TOKEN: $API_TOKEN
       BOT_TOKEN: $BOT_TOKEN
       OPENROUTER_TOKEN: $OPENROUTER_TOKEN
-      API_BASE_URL: http://thon-backend:8000/api
+      API_BASE_URL: http://thon-backend:8080/api
 
 volumes:
   pgdata:

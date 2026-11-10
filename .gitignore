@@ -4,3 +4,7 @@ frontend-api-client/
 
 .env
 CLAUDE.md
+/LOCAL.md
+*.docx
+/docs
+.DS_Store
